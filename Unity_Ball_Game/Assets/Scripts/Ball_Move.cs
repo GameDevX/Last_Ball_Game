@@ -3,15 +3,19 @@ using System.Collections;
 using UnityEngine.SceneManagement;
 
 public class Ball_Move : MonoBehaviour {
+
+   
     public static Ball_Move instance;
     bool isContact;
+    public AudioClip Ball_bounce;
+    public AudioSource Audio_Source;
     Rigidbody Ball_rb;
 
     
 
 	// Use this for initialization
 	void Start () {
-
+        
         Ball_rb = gameObject.GetComponent<Rigidbody>();
         instance = this;
      
@@ -24,8 +28,6 @@ public class Ball_Move : MonoBehaviour {
 
     void FixedUpdate()
     {
-        
-
         Ball_Movement(10);
         Ball_Jump(500);
     }
@@ -34,11 +36,12 @@ public class Ball_Move : MonoBehaviour {
     {
         if(collision.gameObject.tag == "Floor")
         {
+            PlaySound(Ball_bounce);
             isContact = true;   
         }
         if(collision.gameObject.tag == "Block")
         {
-            Cam_Follow.Instance.Shake(0.1f, 0.5f);
+            //Cam_Follow.Instance.Shake(0.1f, 0.5f);
             
         }
         if (collision.gameObject.tag == "Finish")
@@ -47,7 +50,6 @@ public class Ball_Move : MonoBehaviour {
         }
 
     }
-
 
     void Ball_Jump(float Jump_Speed)
     {
@@ -71,9 +73,11 @@ public class Ball_Move : MonoBehaviour {
         Scene scene = SceneManager.GetActiveScene();
         SceneManager.LoadScene(scene.buildIndex);
     }
-        
 
-
-    
+    public void PlaySound(AudioClip Sound_Clip)
+    {
+        Audio_Source.clip = Sound_Clip;
+        Audio_Source.Play();
+    }
 
 }
