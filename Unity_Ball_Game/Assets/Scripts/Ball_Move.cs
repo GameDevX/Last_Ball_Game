@@ -41,7 +41,7 @@ public class Ball_Move : MonoBehaviour {
         }
         if(collision.gameObject.tag == "Block")
         {
-            //Cam_Follow.Instance.Shake(0.1f, 0.5f);
+            Cam_Follow.Instance.Shake(0.1f, 0.5f);
             
         }
         if (collision.gameObject.tag == "Finish")
