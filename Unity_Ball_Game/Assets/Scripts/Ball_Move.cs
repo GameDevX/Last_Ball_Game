@@ -7,15 +7,15 @@ public class Ball_Move : MonoBehaviour {
    
     public static Ball_Move instance;
     bool isContact;
-    public AudioClip Ball_bounce;
+    public AudioClip Ball_bounce,Ball_Exp;
     public AudioSource Audio_Source;
     Rigidbody Ball_rb;
 
-    
 
-	// Use this for initialization
-	void Start () {
-        
+
+    // Use this for initialization
+    void Start () {
+
         Ball_rb = gameObject.GetComponent<Rigidbody>();
         instance = this;
      
@@ -41,6 +41,7 @@ public class Ball_Move : MonoBehaviour {
         }
         if(collision.gameObject.tag == "Block")
         {
+            PlaySound(Ball_Exp);
             Cam_Follow.Instance.Shake(0.1f, 0.5f);
             
         }
@@ -70,6 +71,7 @@ public class Ball_Move : MonoBehaviour {
 
     public void GameOver()
     {
+       
         Scene scene = SceneManager.GetActiveScene();
         SceneManager.LoadScene(scene.buildIndex);
     }
