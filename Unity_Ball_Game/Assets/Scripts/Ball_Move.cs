@@ -11,6 +11,8 @@ public class Ball_Move : MonoBehaviour {
     public AudioSource Audio_Source;
     Rigidbody Ball_rb;
 
+    public Game_Master Game_Master;
+
 
 
     // Use this for initialization
@@ -47,7 +49,7 @@ public class Ball_Move : MonoBehaviour {
         }
         if (collision.gameObject.tag == "Finish")
         {
-            Debug.Log("Bitirdin");
+            Game_Master.WinLevel();
         }
 
     }
@@ -80,6 +82,11 @@ public class Ball_Move : MonoBehaviour {
     {
         Audio_Source.clip = Sound_Clip;
         Audio_Source.Play();
+    }
+
+    public void WinLevel()
+    {
+        Debug.Log("Bölüm Bitirildi.");
     }
 
 }
