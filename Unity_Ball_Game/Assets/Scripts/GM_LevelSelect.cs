@@ -5,17 +5,21 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GM_LevelSelect : MonoBehaviour {
-    public AudioClip Button_Press;
+    
     public Button[] Buttons;
 
     [SerializeField]
     string pressButton = "pressButton";
+
+    [SerializeField]
+    string menuMusic = "menuMusic";
 
     AudioManager audioManager;
 
     void Start () {
 
         audioManager = AudioManager.instance;
+        audioManager.PlayMusic(menuMusic);
 
         int levelReached = PlayerPrefs.GetInt("levelReached", 1); // Ulaştığı seviyeyi değişkene atıyoruz
 
