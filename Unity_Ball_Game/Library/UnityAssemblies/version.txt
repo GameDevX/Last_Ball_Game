@@ -1,5 +1,5 @@
 5.5.1f1:2.3.0.0
-Android
+StandaloneWindows
 D:/Applications/Unity_New/Editor/Data/Managed/UnityEngine.dll
 D:/Applications/Unity_New/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll
 D:/Applications/Unity_New/Editor/Data/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll
