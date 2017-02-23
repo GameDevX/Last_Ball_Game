@@ -20,8 +20,13 @@ public class Game_Master : MonoBehaviour {
 
     public void WinLevel()
     {
-        PlayerPrefs.SetInt("levelReached", Level_To_Unlock);
-        float fadeTime = GameObject.Find("Fading_Scene").GetComponent<Fading_Scene>().BeginFade(-1);
+        if(PlayerPrefs.GetInt("levelReached")<Level_To_Unlock)
+        {
+            PlayerPrefs.SetInt("levelReached", Level_To_Unlock);
+        }
+
+        
+    
         SceneManager.LoadScene(Next_Level);
     }
 }
