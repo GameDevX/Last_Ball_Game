@@ -10,6 +10,7 @@ public class Ball_Move : MonoBehaviour {
     public AudioClip Ball_bounce,Ball_Exp;
     public AudioSource Audio_Source;
     Rigidbody Ball_rb;
+    public Material[] balls_Skin;
 
     public Game_Master Game_Master;
 
@@ -17,6 +18,8 @@ public class Ball_Move : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
+
+        this.gameObject.GetComponent<Renderer>().material = balls_Skin[PlayerPrefs.GetInt("Current_Ball_id")-1];
 
         Ball_rb = gameObject.GetComponent<Rigidbody>();
         instance = this;

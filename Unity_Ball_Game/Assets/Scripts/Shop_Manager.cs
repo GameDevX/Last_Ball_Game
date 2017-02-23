@@ -16,16 +16,54 @@ public class Shop_Manager : MonoBehaviour {
     public Button[] Use_Buttons;
     AudioManager audioManager;
     public IDbConnection dbconn;
-    public int Coin;
+    public int Coin,Ball_ID;
     // Use this for initialization
     void Start () {
+        
         string path = "URI=file:" + Application.dataPath + "/Database/Shop1db.s3db";
         dbconn = (IDbConnection)new SqliteConnection(path);
         Coin = PlayerPrefs.GetInt("Coin", 0);
+        Ball_ID = PlayerPrefs.GetInt("Current_Ball_id", 1);
         PlayerPrefs.SetInt("Coin", 100);
         audioManager = AudioManager.instance;
         audioManager.PlayMusic(menuMusic);
-       Shop_Ref();      
+         Shop_Ref();      
+
+    }
+
+    public void Use_Ball(int Ball_id)
+    {   
+        string path = "URI=file:" + Application.dataPath + "/Database/Shop1db.s3db";
+        dbconn = (IDbConnection)new SqliteConnection(path);
+        dbconn.Open();
+        //----------------------------------------------
+        IDbCommand dbcmd3 = dbconn.CreateCommand();
+
+        string SqlQuery1 = string.Format("UPDATE Balls SET isUse={0} WHERE Ball_id={1}", 1, PlayerPrefs.GetInt("Current_Ball_id"));
+
+        dbcmd3.CommandText = SqlQuery1;
+        dbcmd3.ExecuteScalar();
+
+        dbconn.Close();
+        dbcmd3.Dispose();
+        dbcmd3 = null;
+        //-----------------------------
+
+        dbconn.Open();
+        PlayerPrefs.SetInt("Current_Ball_id", Ball_id);
+
+        IDbCommand dbcmd2 = dbconn.CreateCommand();
+
+            string SqlQuery = string.Format("UPDATE Balls SET isUse={0} WHERE Ball_id={1}",0, Ball_id);
+
+            dbcmd2.CommandText = SqlQuery;
+            dbcmd2.ExecuteScalar();
+
+            dbconn.Close();
+            dbcmd2.Dispose();
+            dbcmd2 = null;
+
+        Shop_Ref();
 
     }
 
@@ -37,6 +75,7 @@ public class Shop_Manager : MonoBehaviour {
             int id = idSearch(Ball_Cost);
             Debug.Log(id);
             BuyingBallData(id);
+            Shop_Ref();
         }
         else
         {
@@ -77,15 +116,13 @@ public class Shop_Manager : MonoBehaviour {
         dbconn = (IDbConnection)new SqliteConnection(path);
         dbconn.Open();   
         IDbCommand dbcmd = dbconn.CreateCommand();
-        string sqlQuery = "SELECT Ball_id,isBuy,isUse,Cost " + "FROM Balls";
+        string sqlQuery = "SELECT Ball_id,Cost " + "FROM Balls";
         dbcmd.CommandText = sqlQuery;
         IDataReader reader = dbcmd.ExecuteReader();
         while (reader.Read())
         {
             int id = reader.GetInt32(0);
-            int isBuy = reader.GetInt32(1);
-            int isUse = reader.GetInt32(2);
-            int Costd = reader.GetInt32(3);
+            int Costd = reader.GetInt32(1);
 
             if (Cost == Costd)
             {
@@ -132,11 +169,25 @@ public class Shop_Manager : MonoBehaviour {
                 Buy_Buttons[id - 1].interactable = false;
 
             }
-            if (isUse == 0)
+            else
+            {
+                Buy_Buttons[id - 1].interactable = true;
+            }
+
+            if(isBuy==1 && isUse==1)
+            {
+                Use_Buttons[id - 1].interactable = true;
+            }
+
+            if(isUse==0)
             {
                 Use_Buttons[id - 1].interactable = false;
-
             }
+
+
+
+
+        
         }
         dbconn.Close();
         reader.Close();
