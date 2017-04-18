@@ -19,18 +19,13 @@ public class left_right : MonoBehaviour {
     {
        
         
-            if (collision.gameObject.name == "alt_zemin")
+            if (collision.gameObject.name == "degen_zemin")
             {
-                Debug.Log("sol değdi");
-                transform.position += new Vector3(3f, 0, 0);
+                Debug.Log("değdi");
+                transform.position += new Vector3(0, 0, 0);
             }
 
-            if (collision.gameObject.name == "finish")
-            {
-				
-                Debug.Log("sağ değdi");
-                transform.position += new Vector3(-70f, 0, 0);
-            }
+            
         
         
     }
