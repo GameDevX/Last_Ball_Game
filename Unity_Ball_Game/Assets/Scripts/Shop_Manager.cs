@@ -12,6 +12,8 @@ public class Shop_Manager : MonoBehaviour {
     string pressButton = "pressButton";
     string menuMusic = "menuMusic";
 
+    public Text Coin_txt;
+
     public Button[] Buy_Buttons;
     public Button[] Use_Buttons;
     AudioManager audioManager;
@@ -22,13 +24,21 @@ public class Shop_Manager : MonoBehaviour {
         
         string path = "URI=file:" + Application.dataPath + "/Database/Shop1db.s3db";
         dbconn = (IDbConnection)new SqliteConnection(path);
+
         Coin = PlayerPrefs.GetInt("Coin", 0);
         Ball_ID = PlayerPrefs.GetInt("Current_Ball_id", 1);
         PlayerPrefs.SetInt("Coin", 100);
         audioManager = AudioManager.instance;
         audioManager.PlayMusic(menuMusic);
-         Shop_Ref();      
+        Shop_Ref();      
+        Coin_Text();
+        Debug.Log(PlayerPrefs.GetInt("Coin").ToString());
 
+    }
+
+    void Coin_Text()
+    {
+        Coin_txt.text = PlayerPrefs.GetInt("Coin").ToString();
     }
 
     public void Use_Ball(int Ball_id)
@@ -76,6 +86,8 @@ public class Shop_Manager : MonoBehaviour {
             Debug.Log(id);
             BuyingBallData(id);
             Shop_Ref();
+            Coin_Text();
+            
         }
         else
         {
